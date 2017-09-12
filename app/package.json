@@ -1,0 +1,17 @@
+{
+  "name": "crypto-market-data",
+  "productName": "Crypto Market Data",
+  "version": "1.0.0",
+  "description": "Crypto currency price viewer",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "C. T. Lin",
+    "email": "chentsulin@gmail.com",
+    "url": "https://github.com/chentsulin"
+  },
+  "scripts": {
+    "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

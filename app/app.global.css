@@ -1,0 +1,38 @@
+@import "~font-awesome/css/font-awesome.css";
+
+body {
+  position: relative;
+  height: 100vh;
+  background-color: #e0e0e0;
+  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.text-center{
+  text-align: center !important;
+}
+
+.text-left{
+  text-align: left !important;
+}
+
+.text-right{
+  text-align: right !important;
+}
+
+.ticker-green{
+  color:'#00E676' !important;
+}
+
+.ticker-red{
+  color:'#F44336' !important;
+}
+p{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html svg.react-stockchart{
+  transform: translateX(-50%) !important;
+}
