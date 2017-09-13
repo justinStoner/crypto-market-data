@@ -49,7 +49,7 @@ class DataCard extends Component{
       <Paper className={classes.paper}>
         <Grid container>
           <Grid item sm={12}>
-            <Typography type="subheading" component="p" align="left">
+            <Typography type="subheading" component="p" align="left" style={{overflow:'visible'}}>
                 <span style={{marginRight:'10px'}}>{coin.MarketName}</span>
                 <IconButton onClick={ () => {this.props.removeCoin(this.props.filter) }} style={{float:'right', position:'relative', top:'-13px'}}>
                   <CloseIcon/>
@@ -115,7 +115,7 @@ class DataCard extends Component{
                 </Grid>
               </Grid>
           :
-          <Grid item sm={12}>
+          <Grid item sm={12} style={{padding:'', margin:'0px -8px 0px 0px'}}>
       				<Chart type='hybrid' data={this.state.data}/>
           </Grid>
           }
