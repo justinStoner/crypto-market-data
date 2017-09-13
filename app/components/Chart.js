@@ -166,17 +166,17 @@ class CandleStickChartPanToLoadMore extends React.Component {
 		const { data, ema26, ema12, macdCalculator, smaVolume50, xScale, xAccessor, displayXAccessor } = this.state;
 
 		return (
-			<ChartCanvas ratio={ratio} width={width} height={300}
-					margin={{ left: 0, right: 45, top: 16, bottom: 32 }} type={type}
+			<ChartCanvas ratio={ratio} width={width} height={112}
+					margin={{ left: 0, right: 45, top: 0, bottom: 0 }} type={type}
 					seriesName="MSFT"
 					data={data}
 					xScale={xScale} xAccessor={xAccessor} displayXAccessor={displayXAccessor}
 					onLoadMore={this.handleDownloadMore}>
-				<Chart id={1} height={300}
+				<Chart id={1} height={112}
 						yExtents={[d => [d.high, d.low], ema26.accessor(), ema12.accessor()]}
-						padding={{ top: 10, bottom: 10 }}>
+						padding={{ top: 0, bottom: 10 }}>
 					<XAxis axisAt="bottom" orient="bottom" showTicks={false} outerTickSize={0} />
-					<YAxis axisAt="right" orient="right" ticks={5} outerTickSize={2}/>
+					<YAxis axisAt="right" orient="right" ticks={5}/>
 
 					<MouseCoordinateY
 						at="right"
@@ -193,7 +193,7 @@ class CandleStickChartPanToLoadMore extends React.Component {
 					<EdgeIndicator itemType="last" orient="right" edgeAt="right"
 						yAccessor={d => d.close} fill={d => d.close > d.open ? "#6BA583" : "#FF0000"}/>
 
-					<OHLCTooltip origin={[0, 0]} className="svg-chart"/>
+					<OHLCTooltip origin={[0, 5]} className="svg-chart"/>
 
 				</Chart>
 

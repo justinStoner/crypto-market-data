@@ -58,7 +58,7 @@ class TopPanel extends Component{
               Coins
             </Typography>
           </Grid>
-          <Grid item sm={7}>
+          <Grid item sm={7} style={{maxHeight:'64px', overflow:'hidden'}}>
           {
             !this.state.isOpen
             ?

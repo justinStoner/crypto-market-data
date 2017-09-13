@@ -48,22 +48,22 @@ class DataCard extends Component{
     return(
       <Paper className={classes.paper}>
         <Grid container>
-          <Grid item sm={12}>
+          <Grid item sm={12} style={{paddingBottom:'0'}}>
             <Typography type="subheading" component="p" align="left" style={{overflow:'visible'}}>
                 <span style={{marginRight:'10px'}}>{coin.MarketName}</span>
-                <IconButton onClick={ () => {this.props.removeCoin(this.props.filter) }} style={{float:'right', position:'relative', top:'-13px'}}>
+                <IconButton onClick={ () => { this.props.removeCoin(this.props.filter) }} style={{float:'right', position:'relative', top:'-13px'}}>
                   <CloseIcon/>
                 </IconButton>
-                <IconButton onClick={ () => {this.setState({chartActive:!this.state.chartActive})} }  style={ this.state.chartActive?{float:'right', color:'#2196f3', position:'relative', top:'-13px'}:{float:'right', position:'relative', top:'-13px'} }>
+                <IconButton onClick={ () => { this.props.toggleChart(this.props.filter) }}  style={ this.props.filter.chartActive?{float:'right', color:'#2196f3', position:'relative', top:'-13px'}:{float:'right', position:'relative', top:'-13px'} }>
                   <ShowChartIcon/>
                 </IconButton>
                 <span style={{paddingLeft:'0px', display:'inline-block', height:'32px'}}>
-                  <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${filter.currencyLong.toLowerCase()}.png`} alt="" />
+                  <img src={`https://files.coinmarketcap.com/static/img/coins/16x16/${filter.currencyLong.toLowerCase()}.png`} alt="" />
                 </span>
             </Typography>
           </Grid>
           {
-            !this.state.chartActive?
+            !this.props.filter.chartActive?
               <Grid container>
                 <Grid item sm={4}>
                   <Typography type="body1" component="p" align="center">
@@ -115,7 +115,7 @@ class DataCard extends Component{
                 </Grid>
               </Grid>
           :
-          <Grid item sm={12} style={{padding:'', margin:'0px -8px 0px 0px'}}>
+          <Grid item sm={12} style={{padding:'0px 0px 0px 8px', margin:'-16px -8px 0px 0px', overflowY:'visible'}}>
       				<Chart type='hybrid' data={this.state.data}/>
           </Grid>
           }

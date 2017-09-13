@@ -23,13 +23,13 @@ const colorNames = [
   ['openSocket', 'sellColor']
 ]
 const defaultFilters = {
-  'BTC-ETH':{currency1:'BTC', currency2:'ETH', name:'BTC-ETH', currencyLong:'ethereum'},
-  'ETH-OMG':{currency1:'ETH', currency2:'OMG', name:'ETH-OMG', currencyLong:'omisego'},
-  'ETH-NEO':{currency1:'ETH', currency2:'NEO', name:'ETH-NEO', currencyLong:'neo'},
-  'ETH-ANT':{currency1:'ETH', currency2:'ANT', name:'ETH-ANT', currencyLong:'aragon'},
-  'ETH-PAY':{currency1:'ETH', currency2:'PAY', name:'ETH-PAY', currencyLong:'tenx'},
-  'USDT-ETH':{currency1:'USDT', currency2:'ETH', name:'USDT-ETH', currencyLong:'ethereum'},
-  'USDT-BTC':{currency1:'USDT', currency2:'BTC', name:'USDT-BTC', currencyLong:'bitcoin'}
+  'BTC-ETH':{currency1:'BTC', currency2:'ETH', name:'BTC-ETH', currencyLong:'ethereum', chartActive:false},
+  'ETH-OMG':{currency1:'ETH', currency2:'OMG', name:'ETH-OMG', currencyLong:'omisego', chartActive:false},
+  'ETH-NEO':{currency1:'ETH', currency2:'NEO', name:'ETH-NEO', currencyLong:'neo', chartActive:false},
+  'ETH-ANT':{currency1:'ETH', currency2:'ANT', name:'ETH-ANT', currencyLong:'aragon', chartActive:false},
+  'ETH-PAY':{currency1:'ETH', currency2:'PAY', name:'ETH-PAY', currencyLong:'tenx', chartActive:false},
+  'USDT-ETH':{currency1:'USDT', currency2:'ETH', name:'USDT-ETH', currencyLong:'ethereum', chartActive:false},
+  'USDT-BTC':{currency1:'USDT', currency2:'BTC', name:'USDT-BTC', currencyLong:'bitcoin', chartActive:false}
 };
 
 const styles = theme => ({
@@ -61,7 +61,8 @@ class Home extends Component{
 
 
     this.removeCoin=this.removeCoin.bind(this);
-    this.addCoin=this.addCoin.bind(this)
+    this.addCoin=this.addCoin.bind(this);
+    this.toggleChart=this.toggleChart.bind(this);
   }
 
   componentDidMount(){
@@ -87,8 +88,8 @@ class Home extends Component{
             this.state.coins && this.state.currencies?
             Object.values(this.state.filters).map( (filter, index) => {
               return (
-                <Grid item xs={4} sm={3} key={index}>
-                  <DataCard currencies={this.state.currencies} coins={this.state.coins} filter={filter} removeCoin={(filter) => {this.removeCoin(filter, this.state)}}></DataCard>
+                <Grid item xs={filter.chartActive?6:4} sm={filter.chartActive?6:3} key={index}>
+                  <DataCard currencies={this.state.currencies} coins={this.state.coins} filter={filter} toggleChart={(filter) =>{this.toggleChart(filter)}} removeCoin={(filter) => {this.removeCoin(filter, this.state)}}></DataCard>
                 </Grid>
               )
             })
@@ -123,7 +124,12 @@ class Home extends Component{
     var filters = Object.assign( {}, state.filters );
     delete filters[filter.name];
     //store.set('filters', filters);
-    this.setState( { filters: filters } )
+    this.setState( { filters:filters } )
+  }
+  toggleChart(filter){
+    var filters = Object.assign({}, this.state.filters);
+    filters[filter.name].chartActive = !filters[filter.name].chartActive;
+    this.setState( {filters:filters} )
   }
 }
 
