@@ -23,13 +23,13 @@ const colorNames = [
   ['openSocket', 'sellColor']
 ]
 const defaultFilters = {
-  'BTC-ETH':{currency1:'BTC', currency2:'ETH', name:'BTC-ETH', marketName:'ethereum'},
-  'ETH-OMG':{currency1:'ETH', currency2:'OMG', name:'ETH-OMG', marketName:'omisego'},
-  'ETH-NEO':{currency1:'ETH', currency2:'NEO', name:'ETH-NEO', marketName:'neo'},
-  'ETH-ANT':{currency1:'ETH', currency2:'ANT', name:'ETH-ANT', marketName:'aragon'},
-  'ETH-PAY':{currency1:'ETH', currency2:'PAY', name:'ETH-PAY', marketName:'tenx'},
-  'USDT-ETH':{currency1:'USDT', currency2:'ETH', name:'USDT-ETH', marketName:'ethereum'},
-  'USDT-BTC':{currency1:'USDT', currency2:'BTC', name:'USDT-BTC', marketName:'bitcoin'}
+  'BTC-ETH':{currency1:'BTC', currency2:'ETH', name:'BTC-ETH', currencyLong:'ethereum'},
+  'ETH-OMG':{currency1:'ETH', currency2:'OMG', name:'ETH-OMG', currencyLong:'omisego'},
+  'ETH-NEO':{currency1:'ETH', currency2:'NEO', name:'ETH-NEO', currencyLong:'neo'},
+  'ETH-ANT':{currency1:'ETH', currency2:'ANT', name:'ETH-ANT', currencyLong:'aragon'},
+  'ETH-PAY':{currency1:'ETH', currency2:'PAY', name:'ETH-PAY', currencyLong:'tenx'},
+  'USDT-ETH':{currency1:'USDT', currency2:'ETH', name:'USDT-ETH', currencyLong:'ethereum'},
+  'USDT-BTC':{currency1:'USDT', currency2:'BTC', name:'USDT-BTC', currencyLong:'bitcoin'}
 };
 
 const styles = theme => ({
@@ -65,27 +65,14 @@ class Home extends Component{
   }
 
   componentDidMount(){
-    try{
-      ipcRenderer.on('currencyData', (evt, data)=>{
-          try{
-            console.log(data);
-            if(data.success) this.setState({currencies:mapCurrencies(data.result.filter( item => item.IsActive))});
-          }catch(e){
-            console.log(e);
-          }
-      })
+    ipcRenderer.on('currencyData', (evt, data)=>{
+      if(data.success) this.setState({currencies:mapCurrencies(data.result.filter( item => item.IsActive))});
+    })
 
-      ipcRenderer.on('marketData', (evt, data)=>{
-          //console.log(data)
-          if(data.success) this.setState({coins:{...splitArray(data.result, this.state)}});
-          if(!this.state.loaded) this.setState({loaded:true})
-        //console.log(data.result);
-      })
-    }
-    catch(e){
-      console.log(e);
-      console.log('error adding listenerse');
-    }
+    ipcRenderer.on('marketData', (evt, data)=>{
+      if(data.success) this.setState({coins:{...splitArray(data.result, this.state)}});
+      if(!this.state.loaded) this.setState({loaded:true})
+    })
     ipcRenderer.send('getPrices')
   }
   render(){
@@ -119,11 +106,13 @@ class Home extends Component{
   addCoin(coin){
     var newFilter = {};
     var filters;
+    const cur1 = coin.MarketName.substr(0, coin.MarketName.indexOf('-')-1);
+    const cur2 = coin.MarketName.substr(coin.MarketName.indexOf('-')+1, coin.MarketName.length+1)
     newFilter[coin.MarketName] = {
       name:coin.MarketName,
-      currency1:coin.MarketName.substr(0, coin.MarketName.indexOf('-')-1),
-      currency2:coin.MarketName.substr(coin.MarketName.indexOf('-')+1, coin.MarketName.length+1),
-      marketName:coin.MarketName
+      currency1:cur1,
+      currency2:cur2,
+      currencyLong:this.state.currencies[cur2].CurrencyLong
     }
     filters = Object.assign( {}, newFilter, this.state.filters );
     console.log(filters);
@@ -149,6 +138,7 @@ const mapCurrencies = (arr) => {
   for ( var i in arr ){
     obj[arr[i].Currency] = arr[i];
   }
+  console.log(obj);
   return obj
 }
 const splitArray = (data, state) => {

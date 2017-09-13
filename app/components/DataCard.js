@@ -50,44 +50,68 @@ class DataCard extends Component{
         <Grid container>
           <Grid item sm={12}>
             <Typography type="subheading" component="p" align="left">
-                {coin.MarketName}
-                <span style={{paddingLeft:'10px', display:'inline-block', height:'32px'}}>
-                  <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${filter.marketName.toLowerCase()}.png`} alt="" />
-                </span>
-                <IconButton onClick={ () => {this.props.removeCoin(this.props.filter) }} style={{float:'right'}}>
+                <span style={{marginRight:'10px'}}>{coin.MarketName}</span>
+                <IconButton onClick={ () => {this.props.removeCoin(this.props.filter) }} style={{float:'right', position:'relative', top:'-13px'}}>
                   <CloseIcon/>
                 </IconButton>
-                <IconButton onClick={ () => {this.setState({chartActive:!this.state.chartActive})} }  style={ this.state.chartActive?{float:'right', color:'#2196f3'}:{float:'right'} }>
+                <IconButton onClick={ () => {this.setState({chartActive:!this.state.chartActive})} }  style={ this.state.chartActive?{float:'right', color:'#2196f3', position:'relative', top:'-13px'}:{float:'right', position:'relative', top:'-13px'} }>
                   <ShowChartIcon/>
                 </IconButton>
+                <span style={{paddingLeft:'0px', display:'inline-block', height:'32px'}}>
+                  <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${filter.currencyLong.toLowerCase()}.png`} alt="" />
+                </span>
             </Typography>
           </Grid>
           {
             !this.state.chartActive?
               <Grid container>
                 <Grid item sm={4}>
-                  <p>Ask:</p>
-                  <p style={tickers[coin.askColor]}>{coin.Ask}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Ask
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.askColor]}>
+                      {coin.Ask}
+                  </Typography>
                 </Grid>
                 <Grid item sm={4}>
-                  <p>Bid:</p>
-                  <p style={tickers[coin.bidColor]}>{coin.Bid}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Bid
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.bidColor]}>
+                      {coin.Bid}
+                  </Typography>
                 </Grid>
                 <Grid item sm={4}>
-                  <p>Last:</p>
-                  <p style={tickers[coin.lastColor]}>{coin.Last}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Last
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.lastColor]}>
+                      {coin.Last}
+                  </Typography>
                 </Grid>
                 <Grid item sm={4}>
-                  <p>Volume</p>
-                  <p style={tickers[coin.volumeColor]}>{coin.BaseVolume}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Volume
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.volumeColor]}>
+                      {coin.BaseVolume}
+                  </Typography>
                 </Grid>
                 <Grid item sm={4}>
-                  <p>Buy Orders</p>
-                  <p style={tickers[coin.buyColor]}>{coin.OpenBuyOrders}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Buy Orders
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.buyColor]}>
+                      {coin.OpenBuyOrders}
+                  </Typography>
                 </Grid>
                 <Grid item sm={4}>
-                  <p>Sell Orders</p>
-                  <p style={tickers[coin.sellColor]}>{coin.OpenSellOrders}</p>
+                  <Typography type="body1" component="p" align="center">
+                      Sell Orders
+                  </Typography>
+                  <Typography type="body1" component="p" align="center" style={tickers[coin.sellColor]}>
+                      {coin.OpenSellOrders}
+                  </Typography>
                 </Grid>
               </Grid>
           :

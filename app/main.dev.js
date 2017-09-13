@@ -79,32 +79,22 @@ app.on('ready', async () => {
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
 
-  try{
-    ipcMain.on('getPrices', () => {
-      mainWindow.webContents.send('test', 'test');
-      fetch( 'https://bittrex.com/api/v1.1/public/getcurrencies')
-      .then( res => res.json())
-      .then( json => {
-        console.log(json);
-          try{
-            mainWindow.webContents.send('currencyData', json);
-          }catch(e){console.log(e);}
-      })
+  ipcMain.on('getPrices', () => {
+    fetch( 'https://bittrex.com/api/v1.1/public/getcurrencies')
+    .then( res => res.json())
+    .then( json => {
+      mainWindow.webContents.send('currencyData', json);
+    })
 
-      setInterval(() => {
-        fetch('https://bittrex.com/api/v1.1/public/getmarketsummaries')
-        .then( res => res.json())
-        .then(json => {
-          console.log(json);
-          try{
-            mainWindow.webContents.send('marketData', json);
-          }catch(e){console.log(e);}
-        })
-      } ,5000)
-    });
-  }catch(e){
-    alert(e);
-  }
+    setInterval(() => {
+      fetch('https://bittrex.com/api/v1.1/public/getmarketsummaries')
+      .then( res => res.json())
+      .then(json => {
+        mainWindow.webContents.send('marketData', json);
+      })
+    } ,5000)
+    
+  });
 
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {

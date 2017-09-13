@@ -115,7 +115,7 @@ class TopPanel extends Component{
                       onRequestDelete={ () => {this.props.removeCoin(filter)} }
                       label={`${filter.name} | ${Math.round10(this.props.coins[filter.name].Last, -3)}`}
                       avatar={
-                        <Avatar src={ `https://files.coinmarketcap.com/static/img/coins/32x32/${filter.marketName.toLowerCase()}.png`} />
+                        <Avatar src={ `https://files.coinmarketcap.com/static/img/coins/32x32/${filter.currencyLong.toLowerCase()}.png`} />
                       }
                     />
                   )
